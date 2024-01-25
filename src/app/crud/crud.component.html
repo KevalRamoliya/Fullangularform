@@ -1,0 +1,262 @@
+
+<div class="container">
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff"
+    type="square-jelly-box" [fullScreen]="true"><p style="color: white">
+      Loading... </p></ngx-spinner>
+  <div class="row">
+    <form [formGroup]="loginform" class="row g-3">
+      <div class="col-lg-4">
+        <!-- Column 1 -->
+        <label>Name:</label>
+        <input type="text" name="name" placeholder="Enter Your Name"
+          class="form-control" formControlName="name">
+        <span class="d-flex" style="color: red;"
+          *ngIf="name && name.invalid && name.touched">Name field must be
+          required</span>
+
+        <!-- Email field -->
+        <label>Email:</label>
+        <input type="email" name="email" placeholder="Enter Your Email"
+          class="form-control" formControlName="email">
+        <span class="d-flex" style="color: red;"
+          *ngIf="email && email.invalid && email.touched">Email field must be
+          required</span>
+        <span class="d-flex" style="color: red;"
+          *ngIf="email && email.hasError('invalidDomain') && email.touched">Invalid
+          email format. Must end with '.com'</span>
+
+        <!-- Phone Number field -->
+        <label>Phone Number:</label>
+        <input type="tel" name="pnumber" placeholder="Enter Your Phone Number"
+          class="form-control" formControlName="pnumber"
+          (input)="handlePhoneNumberInput($event)">
+        <span class="d-flex" style="color: red;"
+          *ngIf="pnumber?.invalid && pnumber?.touched">
+          {{ pnumber?.errors?.['maxlength'] ? 'Phone Number must be 10 digits' :
+          'Phone Number field must be required' }}
+        </span>
+
+      </div>
+
+      <div class="col-lg-4">
+        <!-- Column 2 -->
+        <!-- Age field -->
+        <label>Age:</label>
+        <input type="text" name="age" placeholder="Enter Your Age"
+          class="form-control" formControlName="age"
+          (keypress)="validateNumberInput($event)">
+        <span class="d-flex" style="color: red;"
+          *ngIf="age && age.invalid && age.touched">Age field must be
+          required</span>
+
+        <label>Body Height:</label>
+        <input type="text" name="bheight" placeholder="Enter Your Body Height"
+          class="form-control" (keypress)="validateNumberInput($event)"
+          formControlName="bheight">
+        <span class="d-flex" style="color: red;"
+          *ngIf="bheight && bheight.invalid && bheight.touched">Body Height
+          field must be required</span>
+
+        <label>Body Weight:</label>
+        <input type="text" name="bweight" placeholder="Enter Your Body Weight"
+          class="form-control" formControlName="bweight"
+          (keypress)="validateNumberInput($event)">
+        <span class="d-flex" style="color: red;"
+          *ngIf="bweight && bweight.invalid && bweight.touched">Body Weight
+          field must be required</span>
+      </div>
+
+      <div class="col-lg-4">
+        <!-- Column 3 -->
+        <label>Address:</label>
+        <input type="text" name="address" placeholder="Enter Your Address"
+          class="form-control" formControlName="address">
+        <span class="d-flex" style="color: red;"
+          *ngIf="address && address.invalid && address.touched">Address field
+          must be required</span>
+
+        <label>Gender:</label>
+        <select name="Gender" formControlName="gender"
+          class="form-select">
+          <option value disabled>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        <span class="d-flex" style="color: red;"
+          *ngIf="gender && gender.invalid && gender.touched">Gender field must
+          be required</span>
+
+        <div class="form-check mt-5">
+          <input type="checkbox" class="form-check-input"
+            formControlName="termsAndConditions" />
+          <label class="form-check-label ps-2">Terms And Conditions</label>
+        </div>
+        <div
+          *ngIf="loginform.get('termsAndConditions')?.hasError('required') && (loginform.get('termsAndConditions')?.touched || loginform.get('termsAndConditions')?.dirty)">
+          Please accept the terms and conditions.
+        </div>
+      </div>
+      <!-- Choose file -->
+      <!-- <div class="col-lg-4">
+        <div>
+          <input #fileInput type="file" class="form-control mb-1"
+            [(ngModel)]="searchFile" accept=".pdf"
+            (change)="validationFile(fileInput)">
+        </div>
+        <div>
+          <select name="fileType" formControlName="fileType" class="form-select"
+            [(ngModel)]="selectedFileType">
+            <option value disabled>Select File Type</option>
+            <option value="JPG">JPG</option>
+            <option value="PDF">PDF</option>
+            <option value="PNG">PNG</option>
+          </select>
+          <span style="color: red;"
+            *ngIf="loginform.get('fileType')?.hasError('required') && loginform.get('fileType')?.touched || loginform.get('fileType')?.dirty">Must
+            choose any file</span>
+        </div>
+      </div> -->
+
+      <div class="col-lg-4">
+        <div *ngIf="selectedFileType === 'PDF'">
+          <input #pdfFileInput type="file" class="form-control mb-1"
+      [(ngModel)]="searchFile" accept=".pdf"
+      (change)="validationFile(pdfFileInput)">
+
+        </div>
+        <div *ngIf="selectedFileType === 'JPG'">
+          <input #jpgFileInput type="file" class="form-control mb-1"
+            [(ngModel)]="searchFile" accept=".jpg"
+            (change)="validationFile(jpgFileInput)">
+        </div>
+        <div *ngIf="selectedFileType === 'PNG'">
+          <input #pngFileInput type="file" class="form-control mb-1"
+            [(ngModel)]="searchFile" accept=".png"
+            (change)="validationFile(pngFileInput)">
+        </div>
+
+        <div>
+          <select name="fileType" formControlName="fileType" class="form-select"
+            [(ngModel)]="selectedFileType">
+            <option value disabled>Select File Type</option>
+            <option value="JPG">JPG</option>
+            <option value="PDF">PDF</option>
+            <option value="PNG">PNG</option>
+          </select>
+          <span style="color: red;"
+            *ngIf="(loginform.get('fileType')?.hasError('required') && loginform.get('fileType')?.touched) || (searchFile && !isValidFileType())">Must choose a valid file type</span>
+        </div>
+      </div>
+
+      <!-- Updated HTML -->
+      <div class="col-lg-12 mt-3">
+        <div *ngIf="!edituser && loginform.invalid" style="color: red;">
+          Please fill in all the required fields.
+        </div>
+        <button type="submit"
+          (click)="onButtonClicked(loginform.value);  loginform.markAllAsTouched()"
+          class="btn btn-primary">
+          {{ edituser ? 'Post Data' : 'Save' }}
+        </button>
+
+      </div>
+
+    </form>
+  </div>
+
+  <div>
+    <button class="btn btn-success float-end mx-2"
+      (click)="removeall()">Fist Page</button>
+    <button class="btn btn-danger float-end" (click)="logout()">Log Out</button>
+  </div>
+  <div>
+    <table>
+      <thead>
+
+        <tr>
+          <td>
+            <input type="text" placeholder="Enter data"
+              class="form-control mb-3"
+              [(ngModel)]="searchTerm" />
+          </td>
+          <td>
+            <select class="form-select mb-3 ms-2" [(ngModel)]="selectedField">
+              <option value disabled>Select Field</option>
+              <option value="Name">Name</option>
+              <option value="Email">Email</option>
+              <option value="Phone Number">Phone Number</option>
+              <option value="Age">Age</option>
+              <option value="Body Height">Body Height</option>
+              <option value="Body Weight">Body Weight</option>
+              <option value="Gender">Gender</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Id:-</th>
+          <th>Name:-
+            <img (click)="sortList('asc')" *ngIf="!isAscendingOrder"
+              class="img1"
+              src="../../assets/Icon/arrow-down_6423873.png" alt="uparrow">
+            <img (click)="sortList('desc')" *ngIf="isAscendingOrder"
+              class="img1"
+              src="../../assets/Icon/arrow-up_6423876.png" alt="downarrow">
+          </th>
+          <th>Email:-</th>
+          <th>Phone Number:-</th>
+          <th>Age:-</th>
+          <th>Body Height:-</th>
+          <th>Body Weight:-</th>
+          <th>Address:-</th>
+          <th>Gender:-</th>
+          <th>Delete</th>
+          <th>Edit</th>
+          <th>View Data</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          *ngFor="let data of user | filterdata:searchTerm:selectedField ">
+          <td>{{data.id}}</td>
+          <td>{{data.name}}</td>
+          <td>{{data.email}}</td>
+          <td>{{data.pnumber}}</td>
+          <td>{{data.age}}</td>
+          <td>{{data.bheight}}</td>
+          <td>{{data.bweight}}</td>
+          <td>{{data.address}}</td>
+          <td>{{data.gender}}</td>
+          <td>
+            <button (click)="removedata(data.id)"
+              [disabled]="data.deleteButtonDisabled"
+              class="btn btn-danger">Delete</button>
+          </td>
+          <td>
+            <button [disabled]="!edituser" (click)="editdata(data)"
+              [disabled]="data.deleteButtonDisabled"
+              class="btn btn-success">Edit</button>
+
+          </td>
+          <td>
+            <button (click)="viewdata(data)"
+              class="btn btn-secondary"
+              [disabled]="data.deleteButtonDisabled">View</button>
+          </td>
+          <td>
+            <mat-slide-toggle
+              (click)="toggleEnableDisable(data.id)"></mat-slide-toggle>
+          </td>
+        </tr>
+        <tr>
+        </tr>
+      </tbody>
+    </table>
+    <p-paginator (onPageChange)="onPageChange($event)"
+      [first]="first || 0"
+      [rows]="rows" [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[5 ,10, 20, 30]"></p-paginator>
+  </div>
+
+</div>

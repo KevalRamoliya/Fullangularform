@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <form [formGroup]="loginForm" (ngSubmit)="postuserdata(loginForm.value); loginForm.markAllAsTouched()">
+        <h1>Login Form</h1>
+
+
+        <div class="form-group">
+          <label for="Email">Email:</label>
+          <input type="email" formControlName="email" name="email"
+            class="form-control" placeholder="Enter Email">
+          <div style="color: red;"
+            *ngIf="loginForm.get('email')?.hasError('required') && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)">Email
+            field must be required</div>
+          <span class="d-flex" style="color: red;"
+            *ngIf="email && email.hasError('invalidDomain') && email.touched">Invalid
+            email format. Must end with '.com'</span>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" formControlName="password" name="password"
+            class="form-control" placeholder="Enter Password">
+          <div style="color: red;"
+            *ngIf="loginForm.get('password')?.hasError('required') && (loginForm.get('password')?.touched  || loginForm.get('password')?.dirty)">Must
+            be Enter password.</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+        <p class="mt-3">If you have not account? <a
+          routerLink="">Sign up</a></p>
+
+      </form>
+
+    </div>
+  </div>
+</div>

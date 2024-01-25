@@ -1,0 +1,32 @@
+{
+  "posts": [],
+  "user": [
+    {
+      "id": "ede1",
+      "email": "kevalramoliya3703@gmail.com",
+      "password": "11111"
+    },
+    {
+      "id": "bc6c",
+      "email": "dddddliya3703@gmail.com",
+      "password": "ddddd"
+    }
+  ],
+  "login": [
+    {
+      "id": "8622",
+      "email": "kevalramoliya3703@gmail.com",
+      "password": "11111"
+    },
+    {
+      "id": "bb1f",
+      "email": "kevalramoliya3703@gmail.com",
+      "password": "11111"
+    },
+    {
+      "id": "6e36",
+      "email": "kevalramoliya3703@gmail.com",
+      "password": "11111"
+    }
+  ]
+}

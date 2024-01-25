@@ -1,0 +1,7 @@
+<p>firstpage works!</p>
+
+<!-- your.component.html -->
+<input type="file" (change)="onFileSelected($event)" accept=".png" />
+<div *ngIf="selectedFile">Selected File: {{ selectedFile.name }}</div>
+<div *ngIf="fileError">Invalid file type. Please select a PDF file.</div>
+
